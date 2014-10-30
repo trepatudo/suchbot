@@ -6,6 +6,9 @@ var winston  = require('winston'),
     Currency = require('../lib/currency/app'),
     webadmin = require('../lib/webadmin/app');
 
+// Global promise
+global.Q    = require('q');
+
 var app = {};
 
 /*
@@ -43,8 +46,9 @@ var app = {};
  */
     // Track coins and currency
     app.currency = new Currency(settings.currency.coins, settings.currency.poll);
-// Initialize dogecoin
-    //app.dogecoin = new Dogecoin(settings.dogecoin);
+
+    // Initialize dogecoin
+    app.dogecoin = new Dogecoin(settings.dogecoin);
 
     // Initialize IRC
     app.irc = new IRC(settings.irc, winston);
