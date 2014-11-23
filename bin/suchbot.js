@@ -1,6 +1,7 @@
 var winston  = require('winston'),
     fs       = require('fs'),
     yaml     = require('js-yaml'),
+    lang     = require('../lib/lang/app'),
     Dogecoin = require('../lib/dogecoin/app'),
     IRC      = require('../lib/irc/app'),
     Currency = require('../lib/currency/app'),
@@ -44,12 +45,19 @@ var app = {};
  * Init
  * Start all needed modules
  */
+    // Language
+    app.lang        = new lang(settings.app.language, {
+        nick: settings.irc.login.nickname,
+        short_name: settings.dogecoin.coin.short_name,
+        full_name: settings.dogecoin.coin.short_name,
+    });
+
     // Track coins and currency
-    app.currency = new Currency(settings.currency.coins, settings.currency.poll);
+    app.currency    = new Currency(settings.currency.coins, settings.currency.poll);
 
     // Initialize dogecoin
-    app.dogecoin = new Dogecoin(settings.dogecoin);
+    app.dogecoin    = new Dogecoin(settings.dogecoin);
 
     // Initialize IRC
-    app.irc = new IRC(settings.irc, winston);
+    app.irc         = new IRC(settings.irc, winston);
 
